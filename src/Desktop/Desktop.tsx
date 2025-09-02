@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { SwiperCustom } from './Swiper';
+import CircleSwiper from './CircleSwiper';
 
 const Main = styled.main`
   width: 100%;
@@ -9,6 +10,7 @@ const Main = styled.main`
   border-right: 2px solid #e2e5ec;
   position: relative;
   padding: 170px 40px 104px 80px;
+  display: grid;
 
   &::before,
   &::after {
@@ -39,15 +41,6 @@ const Main = styled.main`
     font-family: 'Bebas Neue', sans-serif;
     color: #3877ee;
     margin-bottom: 15px;
-  }
-
-  .swiper {
-    position: absolute;
-    bottom: 104px;
-    width: calc(100% - 40px - 80px);
-    span {
-      font-size: 20px;
-    }
   }
 `;
 
@@ -95,23 +88,6 @@ const Year = styled.div<{ color: string }>`
   line-height: 1.6;
   letter-spacing: -0.2;
   font-weight: bold;
-`;
-
-const DotsWrapper = styled.div<{ angle: number }>`
-  position: absolute;
-  inset: 0;
-  transform: rotate(${(props) => props.angle}deg);
-`;
-
-const Dot = styled.span`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) translateX(265px);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #42567a;
 `;
 
 export interface IDesktopProps {
@@ -165,23 +141,18 @@ export const Desktop = ({ className }: IDesktopProps) => {
   const countDots = dataKeys.length;
 
   return (
-    <Main className={className}>
-      <H1>Исторические даты</H1>
-      <Timeline>
-        <YearsBlock>
-          <Year color="#5D5FEF">2015</Year>
-          <Year color="#EF5DA8">2022</Year>
-        </YearsBlock>
-        {dataKeys.map((el: string, index: number) => (
-          <DotsWrapper key={el} angle={(360 / countDots) * index}>
-            <Dot>
-              {index}
-              <span>{el}</span>
-            </Dot>
-          </DotsWrapper>
-        ))}
-      </Timeline>
-      <SwiperCustom el={data['Литература']} />
-    </Main>
+    <>
+      <Main className={className}>
+        <H1>Исторические даты</H1>
+        <Timeline>
+          <YearsBlock>
+            <Year color="#5D5FEF">2015</Year>
+            <Year color="#EF5DA8">2022</Year>
+          </YearsBlock>
+          <CircleSwiper />
+        </Timeline>
+        <SwiperCustom el={data['Литература']} />
+      </Main>
+    </>
   );
 };
