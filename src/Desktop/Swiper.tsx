@@ -72,20 +72,13 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el }) => {
   return (
     <SwiperContainer>
       <BtnContainer>
-        <NavBtn
-          onClick={() => swiperRef.current?.slidePrev()}
-          direction="prev"
-          className="prevSlider"
-        ></NavBtn>
-        <NavBtn
-          onClick={() => swiperRef.current?.slideNext()}
-          direction="next"
-          className="nextSlider"
-        ></NavBtn>
+        <NavBtn direction="prev" className="prevSlider"></NavBtn>
+        <NavBtn direction="next" className="nextSlider"></NavBtn>
       </BtnContainer>
       <Swiper
         spaceBetween={80}
         slidesPerView={3}
+        slidesPerGroup={1}
         modules={[Navigation]}
         navigation={{
           nextEl: '.nextSlider',
