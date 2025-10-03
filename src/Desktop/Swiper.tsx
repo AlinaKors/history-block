@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import gsap from 'gsap';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -31,6 +32,11 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next' }>`
     transform-origin: left center;
   }
 
+  &[hidden] {
+    display: block;
+    visibility: hidden;
+  }
+
   &::before {
     transform: translate(-50%, -50%) rotate(45deg);
   }
@@ -52,6 +58,7 @@ const BtnContainer = styled.div`
 const SwiperContainer = styled.div`
   align-self: end;
   position: relative;
+  opacity: 0;
   .swiper {
     position: absolute;
     bottom: 0;
@@ -64,16 +71,39 @@ const SwiperContainer = styled.div`
 
 interface SwiperCustomProps {
   el: Record<string, string>;
+  changeSwiper?: number;
 }
 
-export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el }) => {
+export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) => {
   const swiperRef = useRef<SwiperType | null>(null);
+  const swiperContainer = useRef<HTMLDivElement | null>(null);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (!swiperContainer.current) return;
+
+    gsap.fromTo(
+      swiperContainer.current,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        // delay: 1,
+        y: 0,
+        duration: 1.2,
+      },
+    );
+  }, [changeSwiper]);
 
   return (
-    <SwiperContainer>
+    <SwiperContainer ref={swiperContainer}>
       <BtnContainer>
-        <NavBtn direction="prev" className="prevSlider"></NavBtn>
-        <NavBtn direction="next" className="nextSlider"></NavBtn>
+        <NavBtn direction="prev" className="prevSlider" hidden={activeIndex === 0}></NavBtn>
+        <NavBtn
+          direction="next"
+          className="nextSlider"
+          hidden={activeIndex === Object.keys(el).length - 3}
+        ></NavBtn>
       </BtnContainer>
       <Swiper
         spaceBetween={80}
@@ -87,6 +117,7 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el }) => {
         onBeforeInit={(swiper: SwiperType) => {
           swiperRef.current = swiper;
         }}
+        onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
       >
         {Object.entries(el).map(([key, value]) => (
           <SwiperSlide>

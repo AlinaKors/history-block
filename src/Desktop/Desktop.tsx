@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { SwiperCustom } from './Swiper';
 import CircleSwiper from './CircleSwiper';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
 import { YearsBlock } from './YearsBlock';
 
@@ -238,6 +238,7 @@ export const Desktop = ({ className }: IDesktopProps) => {
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
             circleRef={circleRef}
+            items={dataKeys}
           />
         </Timeline>
         <NavigateCircle>
@@ -259,7 +260,7 @@ export const Desktop = ({ className }: IDesktopProps) => {
           </BtnContainer>
         </NavigateCircle>
 
-        <SwiperCustom el={data['Литература']} />
+        <SwiperCustom el={data[dataKeys[activeIndex]]} changeSwiper={activeIndex} />
       </Main>
     </>
   );

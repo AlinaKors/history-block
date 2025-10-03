@@ -6,18 +6,6 @@ import 'swiper/css';
 import type { Swiper as SwiperType } from 'swiper';
 import gsap from 'gsap';
 
-interface Item {
-  id: number;
-  label: string;
-}
-
-const items: Item[] = [
-  { id: 1, label: 'Кино' },
-  { id: 2, label: 'Литература' },
-  { id: 3, label: 'Наука' },
-  { id: 4, label: 'Технологии' },
-];
-
 const CircleContainer = styled.div`
   position: relative;
   width: 530px;
@@ -99,9 +87,15 @@ interface CircleSwiperProps {
   activeIndex: number;
   setActiveIndex: (index: number) => void;
   circleRef: React.MutableRefObject<SwiperType | null>;
+  items: string[];
 }
 
-const CircleSwiper: React.FC<CircleSwiperProps> = ({ activeIndex, setActiveIndex, circleRef }) => {
+const CircleSwiper: React.FC<CircleSwiperProps> = ({
+  activeIndex,
+  setActiveIndex,
+  circleRef,
+  items,
+}) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const pointsRefs = useRef([...Array(items.length)].map(() => React.createRef<HTMLDivElement>()));
   const [rotation, setRotation] = useState(0);
@@ -132,7 +126,7 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({ activeIndex, setActiveIndex
             const coords = getCoordinates(idx, items.length);
             return (
               <Point
-                key={item.id}
+                key={idx}
                 x={coords.x}
                 y={coords.y}
                 rotation={rotation}
@@ -141,7 +135,7 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({ activeIndex, setActiveIndex
               >
                 <Count active={idx === activeIndex}>{idx + 1}</Count>
                 <Label active={idx === activeIndex} ref={pointsRefs.current[idx]}>
-                  {item.label}
+                  {item}
                 </Label>
               </Point>
             );
@@ -154,9 +148,9 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({ activeIndex, setActiveIndex
         onSwiper={(swiper: SwiperType) => (circleRef.current = swiper)}
         onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
       >
-        {items.map((item) => (
-          <SwiperSlide key={item.id}>
-            <div style={{ visibility: 'hidden' }}>{item.label}</div>
+        {items.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <div style={{ visibility: 'hidden' }}>{item}</div>
           </SwiperSlide>
         ))}
       </Swiper>
