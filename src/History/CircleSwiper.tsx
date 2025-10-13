@@ -14,6 +14,10 @@ const CircleContainer = styled.div`
   outline: 2px solid #d0d5e0;
   border-radius: 50%;
   z-index: 1;
+
+  @media (max-width: 1023px) {
+    display: none;
+  }
 `;
 
 const Point = styled.div<{ x: number; y: number; rotation: number; active?: boolean }>`
@@ -116,7 +120,7 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({
       ease: 'power2.out',
     });
     setRotation(targetAngle);
-  }, [activeIndex]);
+  }, [activeIndex, items.length]);
 
   return (
     <>

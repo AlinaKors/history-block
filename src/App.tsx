@@ -1,8 +1,8 @@
 import React from 'react';
-import { Desktop } from './Desktop/Desktop';
+import { History } from './History/History';
 
 function App() {
-  return <Desktop />;
+  return <History />;
 }
 
 export default App;

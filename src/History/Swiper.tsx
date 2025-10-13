@@ -47,24 +47,24 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next' }>`
 `;
 
 const BtnContainer = styled.div`
+  z-index: 2;
   position: absolute;
+  top: 41px;
   bottom: 16px;
   display: flex;
   justify-content: space-between;
-  width: calc(100% + 80px);
+  width: calc(100% + 120px);
   left: -60px;
 `;
 
 const SwiperContainer = styled.div`
-  align-self: end;
-  position: relative;
   opacity: 0;
+  display: grid;
+  margin: 56px 0px 104px;
   .swiper {
-    position: absolute;
-    bottom: 0;
-    width: calc(100% - 40px);
+    width: 100%;
     span {
-      font-size: 20px;
+      font-size: 1rem;
     }
   }
 `;
@@ -85,12 +85,11 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) 
 
     gsap.fromTo(
       swiperContainer.current,
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 10 },
       {
         opacity: 1,
-        // delay: 1,
         y: 0,
-        duration: 1.2,
+        duration: 1.4,
       },
     );
   }, [changeSwiper]);

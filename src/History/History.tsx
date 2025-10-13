@@ -1,19 +1,22 @@
 import styled from 'styled-components';
 import { SwiperCustom } from './Swiper';
 import CircleSwiper from './CircleSwiper';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
 import { YearsBlock } from './YearsBlock';
 
 const Main = styled.main`
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
   border-left: 2px solid #e2e5ec;
   border-right: 2px solid #e2e5ec;
-  position: relative;
-  padding: 170px 40px 104px 80px;
   display: grid;
+  position: relative;
+  padding: 0 80px;
+
+  @media (max-width: 1023px) {
+    padding: 0 40px;
+  }
 
   &::before,
   &::after {
@@ -21,26 +24,27 @@ const Main = styled.main`
     position: absolute;
     background: #e2e5ec;
     z-index: -1;
+    @media (max-width: 1023px) {
+      display: none;
+    }
   }
 
   &::before {
-    top: 50%;
-    left: 0;
+    transform: translateY(calc(214px + 265px));
+    margin-inline: auto;
     width: 100%;
     height: 2px;
-    transform: translateY(-50%);
+    left: 0;
   }
 
   &::after {
-    left: 50%;
-    top: 0;
-    width: 2px;
     height: 100%;
-    transform: translateX(-50%);
+    width: 2px;
+    left: 50%;
   }
 
   h3 {
-    font-size: 25px;
+    font-size: 1.25rem;
     font-family: 'Bebas Neue', sans-serif;
     color: #3877ee;
     margin-bottom: 15px;
@@ -48,10 +52,19 @@ const Main = styled.main`
 `;
 
 const H1 = styled.h1`
-  font-size: 56px;
+  font-size: 2.8rem;
   line-height: 1.2;
   max-width: 354px;
-  position: relative;
+  position: absolute;
+  left: 78px;
+  top: 170px;
+  z-index: 2;
+
+  @media (max-width: 1023px) {
+    max-width: 240px;
+    left: 40px;
+    top: 60px;
+  }
 
   &::before {
     content: '';
@@ -61,30 +74,50 @@ const H1 = styled.h1`
     height: 120px;
     top: 8px;
     background: linear-gradient(180deg, #3877ee 0%, #ef5da8 100%);
+
+    @media (max-width: 1023px) {
+      display: none;
+    }
   }
 `;
 
 const Timeline = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   width: 530px;
   height: 530px;
+  margin-inline: auto;
+  margin-top: 214px;
+  position: relative;
+  @media (max-width: 1023px) {
+    margin-top: 0;
+  }
 `;
 
 const YearsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 980px;
+  z-index: 2;
+  @media (max-width: 1023px) {
+    margin-top: 56px;
+    flex-wrap: wrap;
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 2px;
+      background: #e2e5ec;
+    }
+  }
 `;
 
 const CurrentSlide = styled.div`
-  font-size: 14px;
+  font-size: 0.7rem;
+  position: absolute;
+  top: -38px;
 `;
 
 const NavBtn = styled.button<{ direction?: 'prev' | 'next'; disabled: boolean }>`
@@ -123,14 +156,13 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next'; disabled: boolean }>
 const BtnContainer = styled.div`
   display: flex;
   gap: 20px;
-  margin-top: 20px;
 `;
 
 const NavigateCircle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-bottom: 56px;
+  position: relative;
 `;
 
 export interface IDesktopProps {
@@ -210,7 +242,7 @@ const data = {
   },
 };
 
-export const Desktop = ({ className }: IDesktopProps) => {
+export const History = ({ className }: IDesktopProps) => {
   const dataKeys = Object.keys(data) as (keyof typeof data)[];
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -251,7 +283,6 @@ export const Desktop = ({ className }: IDesktopProps) => {
               direction="prev"
               disabled={activeIndex === 0}
             />
-
             <NavBtn
               onClick={() => circleRef.current?.slideNext()}
               direction="next"
