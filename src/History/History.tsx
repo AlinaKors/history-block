@@ -30,7 +30,7 @@ const Main = styled.main`
   }
 
   &::before {
-    transform: translateY(calc(214px + 265px));
+    transform: translateY(480px);
     margin-inline: auto;
     width: 100%;
     height: 2px;
@@ -64,6 +64,8 @@ const H1 = styled.h1`
     max-width: 240px;
     left: 40px;
     top: 60px;
+    position: static;
+    margin-top: 80px;
   }
 
   &::before {
@@ -88,7 +90,7 @@ const Timeline = styled.div`
   margin-top: 214px;
   position: relative;
   @media (max-width: 1023px) {
-    margin-top: 0;
+    display: none;
   }
 `;
 
@@ -96,20 +98,21 @@ const YearsWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 980px;
+  top: 400px;
+  width: 100%;
   z-index: 2;
   @media (max-width: 1023px) {
-    margin-top: 56px;
+    margin-top: 64px;
     flex-wrap: wrap;
+    position: static;
+    justify-content: space-between;
 
     &::after {
       content: '';
       width: 100%;
       height: 2px;
       background: #e2e5ec;
+      margin-top: 64px;
     }
   }
 `;
@@ -163,6 +166,10 @@ const NavigateCircle = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
+
+  @media (max-width: 1023px) {
+    order: 4;
+  }
 `;
 
 export interface IDesktopProps {
@@ -261,11 +268,11 @@ export const History = ({ className }: IDesktopProps) => {
     <>
       <Main className={className}>
         <H1>Исторические даты</H1>
+        <YearsWrapper>
+          <YearsBlock color="#5D5FEF" year={from} />
+          <YearsBlock color="#EF5DA8" year={to} />
+        </YearsWrapper>
         <Timeline>
-          <YearsWrapper>
-            <YearsBlock color="#5D5FEF" year={from} />
-            <YearsBlock color="#EF5DA8" year={to} />
-          </YearsWrapper>
           <CircleSwiper
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}

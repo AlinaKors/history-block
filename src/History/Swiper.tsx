@@ -20,6 +20,10 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next' }>`
   box-shadow: 0px 0px 15px rgba(56, 119, 238, 0.1);
   transform: rotate(${(props) => (props.direction === 'next' ? '180deg' : '0deg')});
 
+  @media (max-width: 1023px) {
+    display: none;
+  }
+
   &::before,
   &::after {
     content: '';
@@ -32,7 +36,7 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next' }>`
     transform-origin: left center;
   }
 
-  &[hidden] {
+  &:disabled {
     display: block;
     visibility: hidden;
   }
@@ -47,7 +51,6 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next' }>`
 `;
 
 const BtnContainer = styled.div`
-  z-index: 2;
   position: absolute;
   top: 41px;
   bottom: 16px;
@@ -61,11 +64,20 @@ const SwiperContainer = styled.div`
   opacity: 0;
   display: grid;
   margin: 56px 0px 104px;
+
+  @media (max-width: 1023px) {
+    margin: 40px 0 80px;
+  }
+
   .swiper {
     width: 100%;
     span {
       font-size: 1rem;
     }
+  }
+
+  .swiper-slide {
+    max-width: 16rem;
   }
 `;
 
@@ -77,8 +89,6 @@ interface SwiperCustomProps {
 export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) => {
   const swiperRef = useRef<SwiperType | null>(null);
   const swiperContainer = useRef<HTMLDivElement | null>(null);
-
-  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     if (!swiperContainer.current) return;
@@ -97,17 +107,13 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) 
   return (
     <SwiperContainer ref={swiperContainer}>
       <BtnContainer>
-        <NavBtn direction="prev" className="prevSlider" hidden={activeIndex === 0}></NavBtn>
-        <NavBtn
-          direction="next"
-          className="nextSlider"
-          hidden={activeIndex === Object.keys(el).length - 3}
-        ></NavBtn>
+        <NavBtn direction="prev" className="prevSlider"></NavBtn>
+        <NavBtn direction="next" className="nextSlider"></NavBtn>
       </BtnContainer>
       <Swiper
         spaceBetween={80}
-        slidesPerView={3}
-        slidesPerGroup={1}
+        slidesPerView={'auto'}
+        freeMode={true}
         modules={[Navigation]}
         navigation={{
           nextEl: '.nextSlider',
@@ -116,13 +122,12 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) 
         onBeforeInit={(swiper: SwiperType) => {
           swiperRef.current = swiper;
         }}
-        onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
       >
         {Object.entries(el).map(([key, value]) => (
           <SwiperSlide>
             <div key={key}>
               <h3>{key}</h3>
-              <span>{value}</span>
+              <div>{value}</div>
             </div>
           </SwiperSlide>
         ))}
