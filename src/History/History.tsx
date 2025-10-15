@@ -8,8 +8,8 @@ import { YearsBlock } from './YearsBlock';
 const Main = styled.main`
   width: 100%;
   height: 100%;
-  border-left: 2px solid #e2e5ec;
-  border-right: 2px solid #e2e5ec;
+  border-left: 1px solid rgb(66, 86, 122, 0.1);
+  border-right: 1px solid rgb(66, 86, 122, 0.1);
   display: grid;
   position: relative;
   padding: 0 80px;
@@ -22,8 +22,9 @@ const Main = styled.main`
   &::after {
     content: '';
     position: absolute;
-    background: #e2e5ec;
+    background: #42567a;
     z-index: -1;
+    opacity: 0.1;
     @media (max-width: 1023px) {
       display: none;
     }
@@ -33,13 +34,13 @@ const Main = styled.main`
     transform: translateY(480px);
     margin-inline: auto;
     width: 100%;
-    height: 2px;
+    height: 1px;
     left: 0;
   }
 
   &::after {
     height: 100%;
-    width: 2px;
+    width: 1px;
     left: 50%;
   }
 
@@ -83,17 +84,6 @@ const H1 = styled.h1`
   }
 `;
 
-const Timeline = styled.div`
-  width: 530px;
-  height: 530px;
-  margin-inline: auto;
-  margin-top: 214px;
-  position: relative;
-  @media (max-width: 1023px) {
-    display: none;
-  }
-`;
-
 const YearsWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -103,17 +93,8 @@ const YearsWrapper = styled.div`
   z-index: 2;
   @media (max-width: 1023px) {
     margin-top: 64px;
-    flex-wrap: wrap;
     position: static;
     justify-content: space-between;
-
-    &::after {
-      content: '';
-      width: 100%;
-      height: 2px;
-      background: #e2e5ec;
-      margin-top: 64px;
-    }
   }
 `;
 
@@ -272,14 +253,14 @@ export const History = ({ className }: IDesktopProps) => {
           <YearsBlock color="#5D5FEF" year={from} />
           <YearsBlock color="#EF5DA8" year={to} />
         </YearsWrapper>
-        <Timeline>
-          <CircleSwiper
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-            circleRef={circleRef}
-            items={dataKeys}
-          />
-        </Timeline>
+
+        <CircleSwiper
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          circleRef={circleRef}
+          items={dataKeys}
+        />
+
         <NavigateCircle>
           <CurrentSlide>
             {activeIndexSlide}/{lastIndexSlide}
@@ -298,7 +279,11 @@ export const History = ({ className }: IDesktopProps) => {
           </BtnContainer>
         </NavigateCircle>
 
-        <SwiperCustom el={data[dataKeys[activeIndex]]} changeSwiper={activeIndex} />
+        <SwiperCustom
+          el={data[dataKeys[activeIndex]]}
+          nameCategory={dataKeys[activeIndex]}
+          changeSwiper={activeIndex}
+        />
       </Main>
     </>
   );

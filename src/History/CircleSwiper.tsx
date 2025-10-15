@@ -5,13 +5,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import type { Swiper as SwiperType } from 'swiper';
 import gsap from 'gsap';
+import { Pagination } from 'swiper/modules';
 
 const CircleContainer = styled.div`
   position: relative;
   width: 530px;
   height: 530px;
+  margin-inline: auto;
+  margin-top: 214px;
   border-radius: 50%;
-  outline: 2px solid #d0d5e0;
+  outline: 1px solid rgb(66, 86, 122, 0.2);
   border-radius: 50%;
   z-index: 1;
 
@@ -85,6 +88,35 @@ const PointsWrapper = styled.div<{ rotation: number }>`
   transform: rotate(${(props) => props.rotation}deg);
 `;
 
+const BulletsContainer = styled.div`
+  @media (min-width: 1024px) {
+    display: none;
+  }
+  gap: 20px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  .custom-bullet,
+  .custom-bullet.custom-bullet-active {
+    height: 10px;
+    width: 10px;
+    background-color: #42567a;
+    border-radius: 50%;
+  }
+  .custom-bullet.custom-bullet-active {
+    opacity: 1;
+  }
+
+  .custom-bullet {
+    opacity: 0.4;
+  }
+`;
+
 const radius = 265;
 
 interface CircleSwiperProps {
@@ -146,9 +178,18 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({
           })}
         </PointsWrapper>
       </CircleContainer>
-
+      <BulletsContainer id="bullets" />
       <Swiper
         slidesPerView={1}
+        modules={[Pagination]}
+        className="swiper-circle"
+        pagination={{
+          clickable: true,
+          el: '#bullets',
+          type: 'bullets',
+          bulletClass: 'custom-bullet',
+          bulletActiveClass: 'custom-bullet-active',
+        }}
         onSwiper={(swiper: SwiperType) => (circleRef.current = swiper)}
         onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
       >

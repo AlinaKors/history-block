@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import gsap from 'gsap';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -81,12 +81,30 @@ const SwiperContainer = styled.div`
   }
 `;
 
+const NameCategory = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1.5rem;
+  @media (max-width: 1023px) {
+    &::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background: #c7cdd9;
+      margin-top: 24px;
+      margin-bottom: 20px;
+    }
+  }
+`;
 interface SwiperCustomProps {
   el: Record<string, string>;
+  nameCategory?: string;
   changeSwiper?: number;
 }
 
-export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) => {
+export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, nameCategory, changeSwiper }) => {
   const swiperRef = useRef<SwiperType | null>(null);
   const swiperContainer = useRef<HTMLDivElement | null>(null);
 
@@ -110,6 +128,7 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, changeSwiper }) 
         <NavBtn direction="prev" className="prevSlider"></NavBtn>
         <NavBtn direction="next" className="nextSlider"></NavBtn>
       </BtnContainer>
+      <NameCategory>{nameCategory}</NameCategory>
       <Swiper
         spaceBetween={80}
         slidesPerView={'auto'}
