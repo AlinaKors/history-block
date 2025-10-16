@@ -111,6 +111,9 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, nameCategory, ch
 
   useEffect(() => {
     if (!swiperContainer.current) return;
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(0, 0);
+    }
 
     gsap.fromTo(
       swiperContainer.current,

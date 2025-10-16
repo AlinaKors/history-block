@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { SwiperCustom } from './Swiper';
 import CircleSwiper from './CircleSwiper';
-import { useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
 import { YearsBlock } from './YearsBlock';
 
