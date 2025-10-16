@@ -131,9 +131,10 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, nameCategory, ch
       </BtnContainer>
       <NameCategory>{nameCategory}</NameCategory>
       <Swiper
-        spaceBetween={80}
+        spaceBetween={0}
         slidesPerView={'auto'}
         freeMode={true}
+        grabCursor={true}
         modules={[Navigation]}
         navigation={{
           nextEl: '.nextSlider',
@@ -142,6 +143,7 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, nameCategory, ch
         onBeforeInit={(swiper: SwiperType) => {
           swiperRef.current = swiper;
         }}
+        className="event-swiper"
       >
         {Object.entries(el).map(([key, value]) => (
           <SwiperSlide>

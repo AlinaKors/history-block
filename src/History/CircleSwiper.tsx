@@ -201,7 +201,7 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({
         }}
         onSwiper={(swiper: SwiperType) => (circleRef.current = swiper)}
         onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
-        style={{ display: 'none' }}
+        style={{ height: '0px' }}
       >
         {items.map((item, idx) => (
           <SwiperSlide key={idx}>

@@ -7,16 +7,16 @@ import { YearsBlock } from './YearsBlock';
 
 const Main = styled.main`
   width: 100%;
-  height: 100%;
   border-left: 1px solid rgb(66, 86, 122, 0.1);
   border-right: 1px solid rgb(66, 86, 122, 0.1);
   display: grid;
   position: relative;
   padding: 0 80px;
-  overflow: hidden;
 
   @media (max-width: 1023px) {
     padding: 0 40px;
+    height: 100vh;
+    overflow-x: hidden;
   }
 
   @media (max-width: 889px) {
@@ -56,6 +56,31 @@ const Main = styled.main`
     margin-bottom: 15px;
     @media (max-width: 889px) {
       font-size: 1.14rem;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: flex-start;
+    padding: 0 20px;
+  }
+
+  .event-swiper {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    .swiper-slide:not(:last-child) {
+      padding-right: 80px;
+      box-sizing: content-box;
+      @media (max-width: 1023px) {
+        padding-right: 40px;
+      }
+      @media (max-width: 889px) {
+        padding-right: 24px;
+      }
     }
   }
 `;
@@ -109,6 +134,8 @@ const YearsWrapper = styled.div`
     margin-top: 64px;
     position: static;
     justify-content: space-between;
+    flex-grow: 1;
+    align-items: center;
   }
   @media (max-width: 889px) {
     margin-top: 56px;
