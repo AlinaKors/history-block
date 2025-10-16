@@ -24,29 +24,25 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next' }>`
     display: none;
   }
 
-  &::before,
-  &::after {
+  &::before {
     content: '';
     position: absolute;
-    width: 8px;
-    height: 2px;
-    background: #3877ee;
-    top: 50%;
-    left: 50%;
-    transform-origin: left center;
+    width: 5px;
+    height: 5px;
+    top: 17px;
+    left: 17px;
+    border-top: 2px solid #3877ee;
+    border-right: 2px solid #3877ee;
+    transform: rotate(225deg);
+    @media (max-width: 889px) {
+      width: 6px;
+      height: 6px;
+    }
   }
 
   &:disabled {
     display: block;
     visibility: hidden;
-  }
-
-  &::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-
-  &::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
   }
 `;
 
@@ -71,6 +67,7 @@ const SwiperContainer = styled.div`
 
   .swiper {
     width: 100%;
+
     span {
       font-size: 1rem;
     }
@@ -82,12 +79,13 @@ const SwiperContainer = styled.div`
 `;
 
 const NameCategory = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-  font-size: 1.5rem;
+  display: none;
   @media (max-width: 1023px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 1.5rem;
     &::after {
       content: '';
       width: 100%;
@@ -96,6 +94,9 @@ const NameCategory = styled.div`
       margin-top: 24px;
       margin-bottom: 20px;
     }
+  }
+  @media (max-width: 889px) {
+    font-size: 1.2rem;
   }
 `;
 interface SwiperCustomProps {
@@ -117,7 +118,7 @@ export const SwiperCustom: React.FC<SwiperCustomProps> = ({ el, nameCategory, ch
       {
         opacity: 1,
         y: 0,
-        duration: 1.4,
+        duration: 1,
       },
     );
   }, [changeSwiper]);

@@ -97,7 +97,7 @@ const BulletsContainer = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 32px;
+  bottom: 52px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -107,6 +107,10 @@ const BulletsContainer = styled.div`
     width: 10px;
     background-color: #42567a;
     border-radius: 50%;
+    @media (max-width: 889px) {
+      width: 6px;
+      height: 6px;
+    }
   }
   .custom-bullet.custom-bullet-active {
     opacity: 1;
@@ -114,6 +118,11 @@ const BulletsContainer = styled.div`
 
   .custom-bullet {
     opacity: 0.4;
+  }
+
+  @media (max-width: 889px) {
+    gap: 10px;
+    bottom: 32px;
   }
 `;
 
@@ -192,6 +201,7 @@ const CircleSwiper: React.FC<CircleSwiperProps> = ({
         }}
         onSwiper={(swiper: SwiperType) => (circleRef.current = swiper)}
         onSlideChange={(swiper: SwiperType) => setActiveIndex(swiper.activeIndex)}
+        style={{ display: 'none' }}
       >
         {items.map((item, idx) => (
           <SwiperSlide key={idx}>

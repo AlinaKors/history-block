@@ -13,9 +13,14 @@ const Main = styled.main`
   display: grid;
   position: relative;
   padding: 0 80px;
+  overflow: hidden;
 
   @media (max-width: 1023px) {
     padding: 0 40px;
+  }
+
+  @media (max-width: 889px) {
+    padding: 0 20px;
   }
 
   &::before,
@@ -49,6 +54,9 @@ const Main = styled.main`
     font-family: 'Bebas Neue', sans-serif;
     color: #3877ee;
     margin-bottom: 15px;
+    @media (max-width: 889px) {
+      font-size: 1.14rem;
+    }
   }
 `;
 
@@ -67,6 +75,12 @@ const H1 = styled.h1`
     top: 60px;
     position: static;
     margin-top: 80px;
+  }
+
+  @media (max-width: 889px) {
+    max-width: 124px;
+    font-size: 20px;
+    margin-top: 58px;
   }
 
   &::before {
@@ -96,12 +110,19 @@ const YearsWrapper = styled.div`
     position: static;
     justify-content: space-between;
   }
+  @media (max-width: 889px) {
+    margin-top: 56px;
+  }
 `;
 
 const CurrentSlide = styled.div`
   font-size: 0.7rem;
   position: absolute;
   top: -38px;
+  @media (max-width: 1023px) {
+    top: -32px;
+    font-size: 1rem;
+  }
 `;
 
 const NavBtn = styled.button<{ direction?: 'prev' | 'next'; disabled: boolean }>`
@@ -115,25 +136,29 @@ const NavBtn = styled.button<{ direction?: 'prev' | 'next'; disabled: boolean }>
   transform: rotate(${(props) => (props.direction === 'next' ? '180deg' : '0deg')});
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 2px;
-    background: #42567a;
-    top: 50%;
-    left: 50%;
-    transform-origin: left center;
+  @media (max-width: 889px) {
+    transform: rotate(${(props) => (props.direction === 'next' ? '0deg' : '180deg')});
+    width: 25px;
+    height: 25px;
   }
 
   &::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-
-  &::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    top: 18px;
+    left: 21px;
+    border-top: 2px solid #42567a;
+    border-right: 2px solid #42567a;
+    transform: rotate(225deg);
+    @media (max-width: 889px) {
+      width: 3px;
+      height: 3px;
+      top: 9px;
+      left: 9px;
+      transform: rotate(45deg);
+    }
   }
 `;
 
@@ -150,6 +175,7 @@ const NavigateCircle = styled.div`
 
   @media (max-width: 1023px) {
     order: 4;
+    margin-bottom: 20px;
   }
 `;
 
